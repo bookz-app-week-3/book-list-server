@@ -1,3 +1,5 @@
+'use strict'
+//////// Initialization //////////
 const express = require('express');
 const cors = require('cors');
 const pg = require('pg');
@@ -12,18 +14,25 @@ const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
 client.on('error', err => console.err(err));
 
+
+////// Middleware ////////
 app.use(cors());
 
 app.get('/test', (req, res) => res.send('<h1>Hello, world.</h1>'));
 
+app.get('/api/v1/books', (req, res) => {
+  client.query(`SELECT book_id, title, author, image_url, isbn FROM books;`)
+    .then (results => res.send(results.rows))
+    .catch(console.error);
+})
+
+app.get('*', (req, res) => {
+  res.redirect(CLIENT_URL);
+})
+
 loadDB();
 
 app.listen(PORT, () => console.log(`listening on port: ${PORT}`))
-
-
-
-
-
 
 ////////////// DATABASE LOADERS ////////////////////////
 ////////////////////////////////////////////////////////
