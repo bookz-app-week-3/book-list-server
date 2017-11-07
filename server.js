@@ -4,13 +4,13 @@ const pg = require('pg');
 const fs = require('fs');
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 const CLIENT_URL = process.env.CLIENT_URL;
 
 const client = new pg.Client(process.env.DATABASE_URL);
 
-// client.connect();
-// client.on('error', err => console.err(err));
+client.connect();
+client.on('error', err => console.err(err));
 
 app.use(cors());
 
@@ -20,6 +20,13 @@ loadDB();
 
 app.listen(PORT, () => console.log(`listening on port: ${PORT}`))
 
+
+
+
+
+
+////////////// DATABASE LOADERS ////////////////////////
+////////////////////////////////////////////////////////
 
 function loadBooks() {
   fs.readFile('../book-list-client/data/books.json', (err, fd) => {
