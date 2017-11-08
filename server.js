@@ -26,6 +26,14 @@ app.get('/api/v1/books', (req, res) => {
     .catch(console.error);
 });
 
+
+app.get('/api/v1/books/:id', (req, res) => {
+  client.query(`SELECT book_id, title, author, image_url, isbn FROM books WHERE book_id=1;`),
+    [req.params.book_id]
+    .then (results => res.send(results.rows))
+    .catch(console.error);
+});
+
 app.get('*', (req, res) => {
   res.redirect(CLIENT_URL);
 })

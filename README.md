@@ -28,6 +28,8 @@ _Your README.md must include:_
 
 11-07-17 12:30pm - Finalized loading methods to instantiate book data from our .json file.
 
+11-08-17 1:00pm - Added route for selecting book by id rather than all books at once.
+
 
 
 ## Credits and Collaborations
