@@ -30,7 +30,7 @@ app.get('*', (req, res) => {
   res.redirect(CLIENT_URL);
 })
 
-loadDB();
+// loadDB();
 
 app.listen(PORT, () => console.log(`listening on port: ${PORT}`))
 
