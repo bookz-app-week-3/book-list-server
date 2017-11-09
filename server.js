@@ -4,6 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const pg = require('pg');
 const fs = require('fs');
+const bodyParser = require('body-parser').urlencoded({extended: true});
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,28 +18,33 @@ client.on('error', err => console.error(err));
 
 ////// Middleware ////////
 app.use(cors());
-
 app.get('/test', (req, res) => res.send('<h1>Hello, world.</h1>'));
 
-// app.get('/api/v1/books', (req, res) => {
-//   client.query(`SELECT book_id, title, author, image_url, isbn FROM books;`)
-//     .then (results => res.send(results.rows))
-//     .catch(console.error);
-// });
+app.get('/api/v1/books', (req, res) => {
+  client.query(`SELECT book_id, title, author, image_url, isbn FROM books;`)
+    .then (results => res.send(results.rows))
+    .catch(console.error);
+});
 
 app.get('/api/v1/books/:id', (req, res) => {
-  client.query(`SELECT book_id, title, author, image_url, isbn FROM books WHERE book_id=$1;`,
-    [req.params.id]
-  )
+  client.query(`SELECT * FROM books WHERE book_id=${req.params.id}`)
     .then (results => res.send(results.rows))
+    .then(results => res.send(console.log(results.rows)))
     .catch(console.error)
 })
 
-app.get('*', (req, res) => {
-  res.redirect(CLIENT_URL);
-})
+// app.post('/api/v1/books', bodyParser, (req, res) => {
+//   let {title, author, isbn, image_url, description} = req.body;
+//   client.query(`
+//     INSERT INTO books(title, author, isbn, image_url, description) VALUES($1, $2, $3, $4, $5)`
+//     [title, author, isbn, image_url, description]
+//   )
+//     .then( results => res.sendStatus(201))
+//     .catch(console.error)
+// })
+app.get('*', (req, res) =>res.redirect(CLIENT_URL));
 
-// loadDB();
+loadDB();
 
 app.listen(PORT, () => console.log(`listening on port: ${PORT}`))
 
