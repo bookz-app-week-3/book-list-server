@@ -45,7 +45,7 @@ app.put('/api/v1/books/:id', (req, res) => {
       req.body.isbn,
       req.body.image_url,
       req.body.description,
-      req.params.id
+      req.params.book_id
     ]
   )
     .then(results => res.sendStatus(201))
