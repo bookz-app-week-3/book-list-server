@@ -33,7 +33,18 @@ app.get('/api/v1/books/:id', (req, res) => {
     .catch(console.error)
 })
 
-
+app.put('/api/v1/books/:id', (req, res) => {
+  let {book_id, title, author, isbn, image_url, description} = req.body;
+  client.query(
+    `UPDATE books
+    Set
+    title=$1, author=$2, isbn=$3, image_url=$4, description=$5
+    WHERE book_id=${req.params.id}`,
+    [title, author, isbn, image_url, description, book_id]
+  )
+    .then(results => res.sendStatus(201))
+    .catch(console.error)
+})
 
 app.post('/api/v1/books', bodyParser, (req, res) => {
   let {book_id, title, author, isbn, image_url, description} = req.body;
