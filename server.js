@@ -33,7 +33,7 @@ app.get('/api/v1/books/:id', (req, res) => {
     .catch(console.error)
 })
 
-app.put('/api/v1/books/:id', (req, res) => {
+app.put('/api/v1/books/:id', bodyParser, (req, res) => {
   client.query(
     `UPDATE books
     SET
