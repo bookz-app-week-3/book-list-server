@@ -34,13 +34,19 @@ app.get('/api/v1/books/:id', (req, res) => {
 })
 
 app.put('/api/v1/books/:id', (req, res) => {
-  let {book_id, title, author, isbn, image_url, description} = req.body;
   client.query(
     `UPDATE books
-    Set
+    SET
     title=$1, author=$2, isbn=$3, image_url=$4, description=$5
-    WHERE book_id=${req.params.id}`,
-    [title, author, isbn, image_url, description, book_id]
+    WHERE book_id=$6;`,
+    [
+      req.body.title,
+      req.body.author,
+      req.body.isbn,
+      req.body.image_url,
+      req.body.description,
+      req.params.book_id
+    ]
   )
     .then(results => res.sendStatus(201))
     .catch(console.error)
