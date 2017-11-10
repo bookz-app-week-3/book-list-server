@@ -39,9 +39,16 @@ app.post('/api/v1/books', bodyParser, (req, res) => {
     INSERT INTO books(book_id, title, author, isbn, image_url, description) VALUES($1, $2, $3, $4, $5, $6)`,
     [book_id, title, author, isbn, image_url, description]
   )
-    .then( results => res.sendStatus(201))
+    .then(results => res.sendStatus(201))
     .catch(console.error)
 })
+
+app.delete('/api/v1/books/:id', (req, res) => {
+  client.query(`DELETE FROM books WHERE book_id=${req.params.id}`)
+    .then(() => res.send('Delete complete.')
+    )
+    .catch(err => console.error(err))
+});
 
 app.get('*', (req, res) =>res.redirect(CLIENT_URL));
 
