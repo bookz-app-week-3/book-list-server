@@ -8,7 +8,7 @@ _Your README.md must include:_
 # Project Name
 
 **Author**: Joel Clair and Kerry Nordstrom
-**Version**: 1.0.0 (increment the patch/fix version number up if you make more commits past your first submission)
+**Version**: 1.3.0 (increment the patch/fix version number up if you make more commits past your first submission)
 
 ## Overview
 <!-- This server side environment serves to create a controller to query our database of books and communicate this information to our View level on the client side.  It does this via methods from the Express and cors libraries, with database support from postgreSQL -->
@@ -27,6 +27,14 @@ _Your README.md must include:_
 11-07-17 10:30 am - Set up scaffolding to take in client access and transmit information via routes which will bring the book data to the client.
 
 11-07-17 12:30pm - Finalized loading methods to instantiate book data from our .json file.
+
+11-08-17 1:00pm - Added route for selecting book by id rather than all books at once.
+
+11-09-17 10:00am - Added route for home ("/") to confirm general function of site.
+
+11-09-17 12:00pm - Corrected the get book by id route to send by ${req.params.id} and included console log to confirm what was sent.
+
+11-09-17 1:45pm - Added urlencoded to the *deprecated* bodyParser.
 
 
 
