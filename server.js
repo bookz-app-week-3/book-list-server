@@ -9,7 +9,7 @@ const bodyParser = require('body-parser').urlencoded({extended: true});
 const app = express();
 const PORT = process.env.PORT || 3000;
 const CLIENT_URL = process.env.CLIENT_URL;
-
+const TOKEN = process.env.TOKEN;
 const client = new pg.Client(process.env.DATABASE_URL);
 
 client.connect();
@@ -31,6 +31,16 @@ app.get('/api/v1/books/:id', (req, res) => {
     .then (results => res.send(results.rows))
     .then(results => res.send(console.log(results.rows)))
     .catch(console.error)
+})
+
+app.get('/admin', (req, res) => {
+  if(req.query.token === TOKEN) {
+    console.log('token = ', true);
+    res.send(true)
+  } else {
+    console.log('token = ', false);
+    res.send(false)
+  }
 })
 
 app.put('/api/v1/books/:id', (req, res) => {
