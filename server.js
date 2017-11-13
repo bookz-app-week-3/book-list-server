@@ -43,7 +43,7 @@ app.get('/admin', (req, res) => {
   }
 })
 
-app.put('/api/v1/books/:id', (req, res) => {
+app.put('/api/v1/books/:id', bodyParser, (req, res) => {
   client.query(
     `UPDATE books
     SET
@@ -55,7 +55,7 @@ app.put('/api/v1/books/:id', (req, res) => {
       req.body.isbn,
       req.body.image_url,
       req.body.description,
-      req.params.book_id
+      req.params.id
     ]
   )
     .then(results => res.sendStatus(201))
